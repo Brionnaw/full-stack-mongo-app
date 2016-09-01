@@ -11,8 +11,13 @@ namespace app {
       templateUrl: '/templates/home.html',
       controller: app.Controllers.HomeController,
       controllerAs: 'vm'
+    }) .state('AddMovie', {
+      url: '/AddMovie',
+      templateUrl: '/templates/addMovie.html',
+      controller: app.Controllers.AddMovieController,
+      controllerAs: 'vm'
     });
-    
+
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
   });

@@ -2,24 +2,10 @@ import express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 
-  //MODEL
+  //models
   let Movie = mongoose.model('Movie', {
-    title:String,
-    genre:String
-  });
-
-  // new instance of Movie
-  let newMovie = new Movie({
-    title: "Star Wars",
-    genre:"fantasy"
-  });
-  // save a new movie to the database
-  newMovie.save((err, res)=>{
-    if (err){
-      console.log(err);
-    }else{
-      console.log(res);
-    }
+    title: String,
+    genre: String
   });
 // create static list of movies
 let movies = [
@@ -48,21 +34,23 @@ router.get('/movies/:id', function(req, res, next) {
     res.sendStatus(404);
   }
 });
-
+// make api call to this end point
 /* Post to create or update movie */
 router.post('/movies', function(req, res, next) {
   let movie = req.body;
-  // update existing movie
-  if (movie.id) {
-    let original = findMovie(movie.id);
-    original.title = movie.title;
-    original.director = movie.director;
-  // create new movie
-  } else {
-    movie.id = ++movieId;
-    movies.push(movie);
-  }
-  res.sendStatus(200);
+  console.log(movie);
+  let newMovie = new Movie({
+    title: movie.title,
+    genre: movie.genre
+  });
+    newMovie.save((err, res) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(res);
+      }
+    })
+    res.send('success');
 });
 
 /* delete movie by id */
