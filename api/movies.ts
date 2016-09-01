@@ -1,6 +1,26 @@
 import express = require('express');
 let router = express.Router();
+let mongoose = require('mongoose');
 
+  //MODEL
+  let Movie = mongoose.model('Movie', {
+    title:String,
+    genre:String
+  });
+
+  // new instance of Movie
+  let newMovie = new Movie({
+    title: "Star Wars",
+    genre:"fantasy"
+  });
+  // save a new movie to the database
+  newMovie.save((err, res)=>{
+    if (err){
+      console.log(err);
+    }else{
+      console.log(res);
+    }
+  });
 // create static list of movies
 let movies = [
    {id:1, title:"Star Wars", director:"Lucas" },
