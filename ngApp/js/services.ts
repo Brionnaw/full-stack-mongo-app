@@ -4,6 +4,11 @@ namespace app.Services {
       public save(movie) {
         return this.MovieResource.save(movie).$promise; // api call
       }
+
+
+      public getAll(){
+        return this.MovieResource.query();
+      }
       constructor(private $resource: ng.resource.IResourceService) {
         this.MovieResource = $resource('/api/movies/:id')
 

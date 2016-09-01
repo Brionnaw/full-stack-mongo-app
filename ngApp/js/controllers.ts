@@ -1,9 +1,13 @@
 namespace app.Controllers {
   // HomeController
   export class HomeController {
+    public movies;
+    constructor(
+      private movieServie: app.Services.MovieServie
 
-    constructor() {
-
+    ) {
+      this.movies = this.movieServie.getAll();
+      console.log(this.movies);
     }
   }
 
@@ -11,12 +15,14 @@ namespace app.Controllers {
   export class AddMovieController {
       public movie;
       public save() {
-      this.movieServie.save(this.
+      this.movieServie.save(this.movie).then(() => {
+        this.$state.go('Home');
+      })
 
-        movie);
-      }
+    }
       constructor (
-        private movieServie: app.Services.MovieServie
+        private movieServie: app.Services.MovieServie,
+        public $state:ng.ui.IStateService
       ) {
       }
   }

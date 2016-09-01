@@ -21,7 +21,11 @@ let movieId = movies.length;
 
 /* GET movies */
 router.get('/movies', function(req, res, next) {
-  res.json(movies);
+    Movie.find({}).then((movies) => {
+        console.log(movies);
+      res.json(movies);
+    })
+
 });
 
 /* GET movie by id */
