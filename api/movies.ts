@@ -5,7 +5,12 @@ let mongoose = require('mongoose');
   //models
   let Movie = mongoose.model('Movie', {
     title: String,
-    genre: String
+    genre: String,
+    dateCreated: Date,
+    dateDeleted:{
+      type: Date,
+      default: null
+    }
   });
 // create static list of movies
 let movies = [
@@ -21,7 +26,7 @@ let movieId = movies.length;
 
 /* GET movies */
 router.get('/movies', function(req, res, next) {
-    Movie.find({}).then((movies) => {
+    Movie.find({dateDeleted: null}).then((movies) => {
         console.log(movies);
       res.json(movies);
     })
@@ -44,10 +49,11 @@ router.get('/movies/:id', function(req, res, next) {
 router.post('/movies', function(req, res, next) {
   if(req.body.id == undefined) {
     let movie = req.body;
-    console.log(movie);
+
     let newMovie = new Movie({
       title: movie.title,
-      genre: movie.genre
+      genre: movie.genre,
+      dateCreated: new Date()
     });
       newMovie.save((err, res) => {
         if (err) {
@@ -73,15 +79,15 @@ router.post('/movies', function(req, res, next) {
 
 /* delete movie by id */
 router.delete('/movies/:id', function(req, res, next) {
-  let id = parseInt(req.params['id']);
-  if (!findMovie(id)) {
-    res.sendStatus(404);
-  } else {
-    movies = movies.filter((movie)=> {
-      return movie.id != id;
-    });
+  let id = (req.params['id']);
+  Movie.findByIdAndUpdate(id, {$set: { dateDeleted: new Date ()}}).then((err,) =>{
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(res);
+      }
+  })
     res.sendStatus(200);
-  }
 });
 
 /* find matching movies */

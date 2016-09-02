@@ -21,6 +21,11 @@ namespace app {
       templateUrl: '/templates/editMovie.html',
       controller: app.Controllers.AddMovieController,
       controllerAs: 'vm'
+    }).state('DeleteMovie', {
+      url: '/deleteMovie/:id',
+      templateUrl: '/templates/deleteMovie.html',
+      controller: app.Controllers.DeleteMovieController,
+      controllerAs: 'vm'
     });
 
 
