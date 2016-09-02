@@ -7,7 +7,7 @@ namespace app.Services {
 
 
       public getAll(){
-        return this.MovieResource.query();
+        return this.MovieResource.query(); 
       }
       constructor(private $resource: ng.resource.IResourceService) {
         this.MovieResource = $resource('/api/movies/:id')

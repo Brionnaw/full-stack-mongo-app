@@ -39,21 +39,35 @@ router.get('/movies/:id', function(req, res, next) {
   }
 });
 // make api call to this end point
+
 /* Post to create or update movie */
 router.post('/movies', function(req, res, next) {
-  let movie = req.body;
-  console.log(movie);
-  let newMovie = new Movie({
-    title: movie.title,
-    genre: movie.genre
-  });
-    newMovie.save((err, res) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(res);
-      }
+  if(req.body.id == undefined) {
+    let movie = req.body;
+    console.log(movie);
+    let newMovie = new Movie({
+      title: movie.title,
+      genre: movie.genre
+    });
+      newMovie.save((err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(res);
+        }
+      })
+
+  }
+  else {
+    Movie.findByIdAndUpdate(req.body.id, {$set: { title: req.body.title, genre: req.body.genre}}).then((err,) =>{
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(res);
+        }
     })
+
+  }
     res.send('success');
 });
 
